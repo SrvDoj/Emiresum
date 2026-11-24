@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emir Sariev | Portfolio</title>
+  <meta name="description" content="Portfolio of Emir Sariev, Computer Science student at Pacific States University.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ---------- Colors and fonts (change them here) ---------- */
+    :root {
+      --bg: #08070d;          /* page background */
+      --card: #100e19;        /* card background */
+      --line: #2a2540;        /* thin borders */
+      --text: #e9e6f2;        /* main text */
+      --muted: #9a94b3;       /* secondary text */
+      --accent: #cdb6fb;      /* lavender accent */
+      --glow: rgba(124, 84, 220, .28);
+      --display: "Unbounded", "Arial Black", sans-serif;
+      --body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--body);
+      line-height: 1.65;
+      background-image: radial-gradient(ellipse 60% 40% at 30% 0%, var(--glow), transparent 70%);
+      background-repeat: no-repeat;
+    }
+    a { color: var(--accent); }
+    a:focus-visible, button:focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+    }
+    .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+    section { padding: 72px 0; }
+    h1, h2, h3 { font-family: var(--display); line-height: 1.15; margin: 0; }
+    h2 { font-size: clamp(1.5rem, 3.5vw, 2.2rem); text-transform: uppercase; margin-bottom: 28px; }
+    .label {
+      font-size: .75rem; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--muted); margin: 0 0 12px;
+    }
+
+    /* ---------- Navigation ---------- */
+    header { border-bottom: 1px solid var(--line); }
+    nav { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; padding: 18px 0; }
+    .logo { font-family: var(--display); font-size: .9rem; text-decoration: none; color: var(--text); letter-spacing: .08em; }
+    nav ul { display: flex; gap: 22px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
+    nav ul a { color: var(--muted); text-decoration: none; font-size: .9rem; padding: 6px 0; }
+    nav ul a:hover { color: var(--accent); }
+
+    /* ---------- Buttons ---------- */
+    .btn {
+      display: inline-block; padding: 13px 24px; border-radius: 999px;
+      border: 1px solid var(--accent); background: var(--accent); color: #17102b;
+      font-weight: 500; text-decoration: none; font-size: .95rem; cursor: pointer;
+    }
+    .btn:hover { background: #e0d1fd; }
+    .btn.ghost { background: transparent; color: var(--accent); }
+    .btn.ghost:hover { background: rgba(205, 182, 251, .12); }
+    .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 28px; }
+
+    /* ---------- Home ---------- */
+    .hero { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: center; padding-top: 64px; }
+    h1 { font-size: clamp(2.2rem, 6vw, 4rem); text-transform: uppercase; }
+    h1 span { color: var(--accent); display: block; }
+    .hero p.intro { color: var(--muted); max-width: 54ch; margin: 24px 0 0; }
+    .hero p.intro + p.intro { margin-top: 12px; }
+    .photo {
+      margin: 0; border: 1px solid var(--line); border-radius: 18px; overflow: hidden;
+      box-shadow: 0 0 80px var(--glow); max-width: 380px; justify-self: end;
+    }
+    .photo img { display: block; width: 100%; height: auto; }
+
+    /* ---------- Cards ---------- */
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 26px; }
+    .project { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .project h3 { font-size: 1.4rem; margin-bottom: 14px; }
+    .project h4 { margin: 0 0 6px; font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+    .project p { margin: 0 0 18px; color: var(--muted); }
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 0; list-style: none; }
+    .tags li { border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; font-size: .85rem; }
+
+    /* ---------- Interactive skills filter ---------- */
+    .filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 22px; }
+    .filter-btn {
+      background: transparent; color: var(--text); border: 1px solid var(--line);
+      border-radius: 999px; padding: 9px 18px; font: inherit; font-size: .9rem; cursor: pointer;
+    }
+    .filter-btn:hover { border-color: var(--accent); }
+    .filter-btn.active { background: var(--accent); color: #17102b; border-color: var(--accent); }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; }
+    .skill h3 { font-size: 1rem; margin-bottom: 8px; }
+    .skill p { margin: 0; color: var(--muted); font-size: .92rem; }
+    .skill.hidden { display: none; }
+    #skill-count { color: var(--muted); font-size: .9rem; margin: 18px 0 0; }
+
+    /* ---------- Resume and contact ---------- */
+    .links { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+    .small-link { color: var(--muted); font-size: .92rem; }
+    footer { border-top: 1px solid var(--line); padding: 28px 0; color: var(--muted); font-size: .85rem; }
+
+    /* ---------- Tablet and mobile ---------- */
+    @media (max-width: 820px) {
+      .hero, .project { grid-template-columns: 1fr; }
+      .photo { justify-self: start; max-width: 320px; order: -1; }
+      section { padding: 52px 0; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="wrap">
+      <nav aria-label="Main navigation">
+        <a class="logo" href="#home">EMIR SARIEV</a>
+        <ul>
+          <li><a href="#home">About</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#resume">Résumé</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- ========== HOME / ABOUT ========== -->
+    <section id="home" class="wrap hero">
+      <div>
+        <p class="label">Computer Science student</p>
+        <h1>Emir <span>Sariev</span></h1>
+        <p class="intro">
+          I am a Computer Science student at Pacific States University in Los Angeles.
+          I am interested in programming, web development, and technology, and I am building
+          my foundation in Python, HTML, and GitHub.
+        </p>
+        <p class="intro">
+          I served as Minister of Education in the Student Parliament at Manas-Ata Lyceum in Kyrgyzstan.
+          I enjoy teamwork, learning new things, and building projects that help other students.
+        </p>
+        <div class="btn-row">
+          <a class="btn" href="#projects">See my project</a>
+          <a class="btn ghost" href="assets/resume.pdf" target="_blank" rel="noopener">View My Résumé</a>
+        </div>
+      </div>
+      <figure class="photo">
+        <img src="assets/profile.jpg" alt="Emir Sariev standing at a bookshelf with a ladder in a bookstore" width="932" height="1382">
+      </figure>
+    </section>
+
+    <!-- ========== SKILLS (interactive filter) ========== -->
+    <section id="skills" class="wrap">
+      <p class="label">Interactive</p>
+      <h2>Skills</h2>
+      <p class="small-link" style="margin-top:-12px;margin-bottom:22px">Click a button to filter my skills by category.</p>
+
+      <!-- Each button has a data-filter value. JavaScript reads it when clicked. -->
+      <div class="filters" role="group" aria-label="Filter skills by category">
+        <button class="filter-btn active" data-filter="all" aria-pressed="true">All</button>
+        <button class="filter-btn" data-filter="technical" aria-pressed="false">Technical</button>
+        <button class="filter-btn" data-filter="people" aria-pressed="false">People skills</button>
+        <button class="filter-btn" data-filter="languages" aria-pressed="false">Languages</button>
+      </div>
+
+      <!-- Each card has a data-category. The filter compares it with the clicked button. -->
+      <div class="skills-grid" id="skills-grid">
+        <article class="card skill" data-category="technical"><h3>Python</h3><p>Basic Python programming and programming fundamentals.</p></article>
+        <article class="card skill" data-category="technical"><h3>HTML</h3><p>Basic HTML and website structure.</p></article>
+        <article class="card skill" data-category="technical"><h3>GitHub</h3><p>Publishing websites with GitHub Pages.</p></article>
+        <article class="card skill" data-category="technical"><h3>Web technologies</h3><p>Basic understanding of HTTP and how the web works.</p></article>
+        <article class="card skill" data-category="people"><h3>Teamwork</h3><p>Comfortable working independently and as part of a team.</p></article>
+        <article class="card skill" data-category="people"><h3>Leadership</h3><p>Student leadership, organization, and supporting others.</p></article>
+        <article class="card skill" data-category="people"><h3>Problem-solving</h3><p>Adaptability, time management, and quick learning.</p></article>
+        <article class="card skill" data-category="languages"><h3>Kyrgyz</h3><p>Language skill from my résumé.</p></article>
+        <article class="card skill" data-category="languages"><h3>Russian</h3><p>Language skill from my résumé.</p></article>
+        <article class="card skill" data-category="languages"><h3>English</h3><p>Language skill from my résumé.</p></article>
+      </div>
+      <p id="skill-count" aria-live="polite"></p>
+    </section>
+
+    <!-- ========== PROJECTS ========== -->
+    <section id="projects" class="wrap">
+      <p class="label">Featured project</p>
+      <h2>Projects</h2>
+      <article class="card project">
+        <div>
+          <h3>Telegram Student Council Bot</h3>
+          <h4>What it does</h4>
+          <p>
+            A Telegram bot developed for my school's student council that helps students explore
+            topics related to different school subjects. A student opens the bot and chooses a grade
+            from 7 to 11, then a subject. The bot provides the textbooks for that subject, and
+            students can choose the pages they need and open a solutions book (the teacher's book with answers).
+          </p>
+          <h4>The problem it helps solve</h4>
+          <p>Students can find the books they need for each subject in one place instead of searching for them separately.</p>
+          <h4>My contribution</h4>
+          <p>The bot was made by the student council team that I led as Minister of Education.</p>
+        </div>
+        <div>
+          <h4>Tools and concepts</h4>
+          <ul class="tags">
+            <li>Python</li>
+            <li>Python Telegram Bot</li>
+          </ul>
+        </div>
+      </article>
+    </section>
+
+    <!-- ========== RÉSUMÉ ========== -->
+    <section id="resume" class="wrap">
+      <p class="label">Résumé</p>
+      <h2>Résumé</h2>
+      <div class="links">
+        <!-- Relative path: works on GitHub Pages because the file is in the assets folder -->
+        <a class="btn" href="assets/resume.pdf" target="_blank" rel="noopener">View My Résumé</a>
+        <a class="small-link" href="https://1drv.ms/w/c/b7a8ccb5ab7659f3/IQACPW5nU2bJQ5_tYXniPmAMAcJu11BF6MBdjrJqhb4uGmU?e=4pW9I6" target="_blank" rel="noopener">Word version (OneDrive)</a>
+      </div>
+    </section>
+
+    <!-- ========== SOCIAL / CONTACT ========== -->
+    <section id="contact" class="wrap">
+      <p class="label">Contact</p>
+      <h2>Find me online</h2>
+      <div class="links">
+        <a class="btn ghost" href="https://www.instagram.com/sariev.wav/" target="_blank" rel="noopener">Instagram @sariev.wav</a>
+        <a class="btn ghost" href="https://github.com/SrvDoj" target="_blank" rel="noopener">GitHub SrvDoj</a>
+        <a class="btn ghost" href="mailto:emirsariev09@gmail.com">emirsariev09@gmail.com</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">Emir Sariev · Pacific States University · Computer Science</div>
+  </footer>
+
+  <script>
+    /* =====================================================
+       Interactive feature: Skills filter
+       ===================================================== */
+
+    // 1. Find the elements on the page
+    var buttons = document.querySelectorAll(".filter-btn");
+    var cards = document.querySelectorAll(".skill");
+    var countText = document.getElementById("skill-count");
+
+    // 2. FUNCTION: shows only the cards that match the chosen category
+    function filterSkills(category) {
+      var visible = 0;
+
+      // LOOP: check every skill card one by one
+      for (var i = 0; i < cards.length; i++) {
+        var cardCategory = cards[i].getAttribute("data-category");
+
+        // CONDITIONAL: show the card if it matches, hide it if it does not
+        if (category === "all" || cardCategory === category) {
+          cards[i].classList.remove("hidden");
+          visible++;
+        } else {
+          cards[i].classList.add("hidden");
+        }
+      }
+
+      // Update the highlighted button
+      for (var j = 0; j < buttons.length; j++) {
+        var isActive = buttons[j].getAttribute("data-filter") === category;
+        buttons[j].classList.toggle("active", isActive);
+        buttons[j].setAttribute("aria-pressed", isActive);
+      }
+
+      // Update the message under the cards
+      countText.textContent = "Showing " + visible + " of " + cards.length + " skills";
+    }
+
+    // 3. USER INPUT: run the function when a button is clicked
+    for (var k = 0; k < buttons.length; k++) {
+      buttons[k].addEventListener("click", function () {
+        filterSkills(this.getAttribute("data-filter"));
+      });
+    }
+
+    // 4. Show all skills when the page loads
+    filterSkills("all");
+  </script>
+</body>
+</html>
